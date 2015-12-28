@@ -1,9 +1,9 @@
 var request = require('superagent');
 var fs = require('fs');
 var moment = require('moment');
-var util = require('util');
+// var util = require('util');
 
-var utils = require('../src/utils.js');
+var utils = require('../src/utils/utils.js');
 var RMOB = require('../rmob/rmob.js');
 var ParseError = require('../rmob/ParseError.js');
 
@@ -63,7 +63,6 @@ combinations.forEach(function(combination) {
 
         }
         catch (e) {
-
           // ParseErrors mean something is wrong with the file, so all we need
           // to do is to log it and move on. Other errors still need to propagate.
           if (e instanceof ParseError) {
@@ -72,9 +71,7 @@ combinations.forEach(function(combination) {
           else {
             throw e;
           }
-
         }
-
       }
       else {
         console.log(url, 'NOOOO!!!', err);

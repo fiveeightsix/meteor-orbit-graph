@@ -8,7 +8,6 @@ function describeArcSegment(centerX, centerY, innerRadius, outerRadius, startAng
 
   // Start and end angles are reversed, as the inner stroke is being drawn
   // in the opposite direction to the outer.
-
   var innerStart = utils.polarToCartesian(endAngle, innerRadius, centerX, centerY);
   var innerEnd = utils.polarToCartesian(startAngle, innerRadius, centerX, centerY);
   

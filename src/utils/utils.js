@@ -66,10 +66,16 @@ utils.range = function(a, b) {
 };
 
 
+utils.sum = function(a, b) {
+  return a + b;
+};
+
+
 utils.attributeSafe = function(string) {
   return string
     .toLowerCase()
     .replace(/[^a-z0-9]/g, '-');
 };
+
 
 module.exports = utils;
