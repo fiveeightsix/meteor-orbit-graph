@@ -4,7 +4,7 @@
   "description": "",
   "dependencies": {
     "superagent": "~1.0.0",
-    "react": "~0.13.2",
+    "react": "~0.13.3",
     "moment": "~2.9.0",
     "object-assign": "~2.0.0",
     "keymirror": "~0.1.1",
