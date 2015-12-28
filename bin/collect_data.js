@@ -10,23 +10,14 @@ var ParseError = require('../rmob/ParseError.js');
 
 var observers = ['_aav_', 'brower', 'booth', 'camps', 'dubois', 'hvezdarna_svakov', 'saito'];
 var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-var years = ['2011', '2012', '2013', '2014'];
+var years = ['2012', '2013', '2014', '2015'];
 
 var data = {}; // Store collected data.
 var dataDir = '../data'; // Write output files here.
 var combinations = cartesianProduct([observers, years, months]);
 var pending = combinations.length; // Track number of requests to be sent.
-var dataList = [];
+var dataList = []; // List of the available sets.
 
-
-function parser(res, fn){
-  res.text = '';
-  res.setEncoding('binary');
-  res.on('data', function(chunk) {
-    res.text += chunk.toString('binary');
-  });
-  res.on('end', fn);
-}
 
 combinations.forEach(function(combination) {
 
@@ -34,15 +25,15 @@ combinations.forEach(function(combination) {
   var year = combination[1];
   var month = combination[2];
   var url = RMOB.makeDataURL(observerID, year, month);
-  var fileKey;
-    request
+  
+  request
     .get(url)
     .set('Accept', 'text/plain')
     .buffer(true)
-    .parse(parser)
+    .parse(responseParser)
     .end(function(err, res) {
-
       var dataSet; // Data from the current request.
+      var fileKey;
       
       console.log('Request', url);
       
@@ -52,11 +43,9 @@ combinations.forEach(function(combination) {
           dataSet = RMOB.parse(res.text);
 
           if (dataSet) {
-
             console.log('Data found');
 
             // Assign the data set under what should be a unique identifier.
-
             fileKey = [observerID + '_' + year];
 
             if (data.hasOwnProperty(fileKey)) {
@@ -67,22 +56,16 @@ combinations.forEach(function(combination) {
                 data: [sumMonth(year, month, dataSet.data)],
                 meta: dataSet.meta
               };
-
-              
-              // Add the data set to the list of sets available
-              
+              // Add the data set to the list of sets available              
               dataList.push({year: year, observerID: observerID});
-
             }
-              
           }
 
         }
         catch (e) {
 
           // ParseErrors mean something is wrong with the file, so all we need
-          // to do is to log it a move on. Other errors still need to propogate.
-
+          // to do is to log it and move on. Other errors still need to propagate.
           if (e instanceof ParseError) {
             console.log('Invalid RMOB data file: ' + e.message);
           }
@@ -94,24 +77,17 @@ combinations.forEach(function(combination) {
 
       }
       else {
-
         console.log(url, 'NOOOO!!!', err);
-
       }
 
       // Mark another completed request.
       pending -= 1;
       console.log('Pending', pending);
-      
 
+      // If all the requests have completed, write out the files.
       if (pending <= 0) {
-
-        // This is only executed once all the requests have completed.
-        
         console.log('All requests finished.');
-   
         writeDataToFiles(data);
-
         fs.writeFileSync(dataDir + '/available_data.json', JSON.stringify(dataList));
       }
       
@@ -122,9 +98,7 @@ combinations.forEach(function(combination) {
 
 // Run when all data is collected.
 function writeDataToFiles(data) {
-
-  for (var dataID in data) {
-    
+  for (var dataID in data) {  
     // Flatten the data array so all months are together.
     data[dataID].data = [].concat.apply([], data[dataID].data);
           console.log(data[dataID].meta);
@@ -132,15 +106,12 @@ function writeDataToFiles(data) {
       dataDir + '/' + dataID + '.json',
       JSON.stringify(data[dataID])
     );
- 
   }
-
 }
 
 
 function sumMonth(year, month, monthData) {
   return monthData.map(function(hourlyCounts, i) {
-
     // Arrays start at 0, days start at 1.
     var day = i + 1;
 
@@ -161,7 +132,6 @@ function sumMonth(year, month, monthData) {
 }
     
 
-
 function cartesianProduct(arrays) {
   if (arrays.length === 1) {
     return arrays[0];
@@ -177,3 +147,12 @@ function cartesianProduct(arrays) {
   }
 }
 
+
+function responseParser(res, fn){
+  res.text = '';
+  res.setEncoding('binary');
+  res.on('data', function(chunk) {
+    res.text += chunk.toString('binary');
+  });
+  res.on('end', fn);
+}

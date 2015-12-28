@@ -13,10 +13,10 @@ var path = {
   ENTRY: './src/index.js',
   OUT: 'meteor-orbit-bundle.js',
   CSS_OUT: 'meteor-orbit-styles.css',
-  DEST: 'dist',
-  DEST_CSS: 'dist/css',
-  DEST_JS: 'dist/js',
-  DEST_DATA: 'dist/data'
+  DEST: 'build',
+  DEST_CSS: 'build/css',
+  DEST_JS: 'build/js',
+  DEST_DATA: 'build/data'
 };
 
 
