@@ -1,0 +1,25 @@
+#+TITLE: Meteor Orbit Graph
+#+DATE: <2015-12-28 Mon>
+#+AUTHOR: Karl Inglis
+#+EMAIL: mail@karlinglis.net
+#+OPTIONS: num:nil 
+#+LANGUAGE: en
+
+
+* What is this?
+
+  An exercise in visualising daily meteor count data using the [[https://facebook.github.io/react/][React library]].
+
+* Why?
+
+  The basic idea is to present a year's worth of meteor data in a way that evokes the correspondence between the time of the year and the position of the objects in the Earth's orbit that give rise to the showers. It is also an attempt to build a simple application in a style similar to that used in Facebook's [[https://github.com/facebook/flux/tree/master/examples/flux-chat/][Flux Chat Example]].
+
+* Data
+
+  The data is taken from selected participating members of the [[http://www.rmob.org][Radio Meteor Observing Bulletin]], who have made their results available on the [[http://217.169.242.217/rmob/articles.php?lng=en&pg=28][Visual RMOB Archives]] under the [[http://creativecommons.org/licenses/by-sa/2.0/fr/][Creative Commons]] licence.
+
+  The script used to generate the data files is included in the ~bin~ directory, and can be run with
+
+  #+BEGIN_SRC sh
+  node bin/collect_data.js
+  #+END_SRC
