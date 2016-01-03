@@ -1,5 +1,6 @@
 node_modules/*
-build/*
-css/*
+/build/
+/css/
 /index.html
 /meteor-orbit-styles.css
+/data/

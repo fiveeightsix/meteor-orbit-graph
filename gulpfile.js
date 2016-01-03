@@ -7,25 +7,16 @@ var concat = require('gulp-concat');
 
 
 var path = {
-  DATA: 'data/*.json',
   ENTRY: './src/index.js',
   OUT: 'meteor-orbit-bundle.js',
   DEST: 'build',
-  DEST_JS: 'build',
-  DEST_DATA: 'build/data'
+  DEST_JS: 'build'
 };
 
 
 // Clean out build files
 gulp.task('clean', function(done) {
   del([path.DEST + '/*'], done);
-});
-
-
-// Copy data files
-gulp.task('data', function() {
-  gulp.src(path.DATA)
-    .pipe(gulp.dest(path.DEST_DATA));
 });
 
 
@@ -45,4 +36,4 @@ gulp.task('build-js', function() {
     .pipe(gulp.dest(path.DEST_JS));
 });
 
-gulp.task('default', ['build-js', 'data']);
+gulp.task('default', ['build-js']);
