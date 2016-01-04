@@ -8,6 +8,29 @@ var RadialLine = require('./RadialLine.jsx');
 var RadialText = require('./RadialText.jsx');
 
 
+var ShowerLabel = React.createClass({
+
+  render: function() {
+    return (
+      <g>
+        <RadialLine centerX={this.props.centerX}
+                    centerY={this.props.centerY}
+                    innerR={this.props.innerR}
+                    outerR={this.props.outerR}
+                    angle={this.props.angle} />
+        <RadialText centerX={this.props.centerX}
+                    centerY={this.props.centerY}
+                    radius={this.props.textRadius}
+                    angle={this.props.angle}
+                    text={this.props.text}
+                    fontSize="small" />
+      </g>
+    );
+  }
+  
+});
+
+
 var ShowerLabels = React.createClass({
 
   render: function() {
@@ -24,21 +47,14 @@ var ShowerLabels = React.createClass({
       var tickAngle = daysScale(moment(peakDateObj).dayOfYear());
 
       return (
-        <g>
-          <RadialLine key={'line' + i}
-                      centerX={this.props.centerX}
-                      centerY={this.props.centerY}
-                      innerR={this.props.innerR}
-                      outerR={this.props.outerR}
-                      angle={tickAngle} />
-          <RadialText key={'text' + i}
-                      centerX={this.props.centerX}
-                      centerY={this.props.centerY}
-                      radius={textRadius}
-                      angle={tickAngle}
-                      text={shower.name}
-                      fontSize="small" />
-        </g>
+        <ShowerLabel key={shower.name}
+                     centerX={this.props.centerX}
+                     centerY={this.props.centerY}
+                     innerR={this.props.innerR}
+                     outerR={this.props.outerR}
+                     textRadius={textRadius}
+                     angle={tickAngle}
+                     text={shower.name} />
       );
 
     }, this);
