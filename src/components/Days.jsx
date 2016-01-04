@@ -20,7 +20,7 @@ var Days = React.createClass({
         fill: 'rgba(0, 255, 0, ' + colourScale(datum.count) + ')'
       };
       var arcText = datum.date + ': ' + datum.count;
-
+      
       return (
         <ArcSegment key={i}
                     centerX={this.props.centerX}
@@ -35,8 +35,6 @@ var Days = React.createClass({
       
     }, this);
     
-
-    /* var dayArcs = {}; */
     return (
       <g className="day-arcs">
         {dayArcs}

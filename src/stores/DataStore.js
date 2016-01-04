@@ -3,6 +3,7 @@ var util = require('util');
 var assign = require('object-assign');
 
 var MODispatcher = require('../dispatcher/MODispatcher.js');
+var SelectionStore = require('./SelectionStore.js');
 var ActionTypes = require('../constants/MOConstants').ActionTypes;
 
 
@@ -38,6 +39,10 @@ DataStore.dispatchToken = MODispatcher.register(function(action) {
 
   case ActionTypes.RECEIVE_DATA:
     data = action.data;
+
+    // Guarantee the selected year has changed
+    MODispatcher.waitFor([SelectionStore.dispatchToken]);
+    
     DataStore.emitChange();
     break;
 

@@ -30,12 +30,10 @@ var MeteorOrbitGraph = React.createClass({
 
   componentDidMount: function() {
     DataStore.addChangeListener(this.onDataChange);
-    SelectionStore.addChangeListener(this.onDataChange);
   },
 
   componentWillUnmount: function() {
     DataStore.removeChangeListener(this.onDataChange);
-    SelectionStore.removeChangeListener(this.onDataChange);
   },
  
   onDataChange: function() {
