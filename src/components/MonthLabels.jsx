@@ -20,21 +20,21 @@ var MonthLabels = React.createClass({
     var monthTicks = monthEndpoints.map(function(month, i) {
       var tickAngle = daysScale(month[0]);
       return (
-        <g>
-          <RadialLine key={i}
-                      centerX={this.props.centerX}
-                      centerY={this.props.centerY}
-                      innerR={this.props.innerR}
-                      outerR={this.props.outerR}
-                      angle={tickAngle} />
-        </g>
+        <RadialLine key={tickAngle}
+                    centerX={this.props.centerX}
+                    centerY={this.props.centerY}
+                    innerR={this.props.innerR}
+                    outerR={this.props.outerR}
+                    angle={tickAngle} />
+
       );
     }, this);
 
     var monthNames = monthEndpoints.map(function(month, i) {
       var textAngle = daysScale(((month[1] - month[0]) / 2) + month[0]);
       return (
-        <RadialText key={i}
+        <RadialText key={utils.monthAbbrs[i]}
+                    textKey={utils.monthAbbrs[i]}
                     centerX={this.props.centerX}
                     centerY={this.props.centerY}
                     radius={194}
