@@ -1,11 +1,13 @@
-var request = require('superagent');
 var fs = require('fs');
+var request = require('superagent');
 var moment = require('moment');
 
 var utils = require('../src/utils/utils.js');
 var RMOB = require('../rmob/rmob.js');
 var ParseError = require('../rmob/ParseError.js');
 
+
+var dataDir = process.cwd() + '/data'; // Write output files here.
 
 var observers = ['_aav_', 'brower', 'booth', 'camps', 'dubois', 'hvezdarna_svakov', 'saito'];
 var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
@@ -15,9 +17,19 @@ var combinations = cartesianProduct([observers, years, months]);
 var pending = combinations.length; // Track number of requests to be sent.
 var data = {}; // Store collected data.
 var dataList = []; // List of the available sets.
-var dataDir = '../data'; // Write output files here.
 
 
+// Create data directory, ignoring error if it already exists.
+try {
+  fs.mkdirSync(dataDir, '775');
+}
+catch (err) {
+  if (err.code != 'EEXIST') {
+    throw err;
+  }
+}
+
+// Work through observer/date combinations to retrieve data sets.
 combinations.forEach(function(combination) {
 
   var observerID = combination[0];
@@ -88,7 +100,6 @@ combinations.forEach(function(combination) {
       }
       
     });
-
 });
 
 
@@ -96,7 +107,6 @@ function writeDataToFiles(data) {
   for (var dataID in data) {  
     // Flatten the data array so all months are together.
     data[dataID].data = [].concat.apply([], data[dataID].data);
-          console.log(data[dataID].meta);
     fs.writeFileSync(
       dataDir + '/' + dataID + '.json',
       JSON.stringify(data[dataID])
@@ -122,10 +132,10 @@ function sumMonth(year, month, monthData) {
     };
     
   })
-    // Discard invalid dates.
+  // Discard invalid dates.
     .filter(function(day) { return day.date !== 'Invalid date'; });
 }
-    
+
 
 function cartesianProduct(arrays) {
   if (arrays.length === 1) {

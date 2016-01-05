@@ -1,7 +1,9 @@
 {
   "name": "meteor-orbit-graph",
   "version": "0.0.1",
-  "description": "",
+  "description": "An exercise in visualising daily meteor count data.",
+  "repository": "https://github.com/fiveeightsix/meteor-orbit-graph",
+  "author": "Karl Inglis <mail@karlinglis.net>",
   "dependencies": {
     "superagent": "~1.0.0",
     "react": "~0.13.3",
@@ -19,5 +21,8 @@
     "vinyl-source-stream": "~1.1.0",
     "del": "~1.1.1",
     "gulp-concat": "~2.5.2"
+  },
+  "scripts": {
+    "data": "node bin/collect_data.js"
   }
 }
