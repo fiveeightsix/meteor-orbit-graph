@@ -1,7 +1,6 @@
 var request = require('superagent');
 var fs = require('fs');
 var moment = require('moment');
-// var util = require('util');
 
 var utils = require('../src/utils/utils.js');
 var RMOB = require('../rmob/rmob.js');
@@ -12,11 +11,11 @@ var observers = ['_aav_', 'brower', 'booth', 'camps', 'dubois', 'hvezdarna_svako
 var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
 var years = ['2012', '2013', '2014', '2015'];
 
-var data = {}; // Store collected data.
-var dataDir = '../data'; // Write output files here.
 var combinations = cartesianProduct([observers, years, months]);
 var pending = combinations.length; // Track number of requests to be sent.
+var data = {}; // Store collected data.
 var dataList = []; // List of the available sets.
+var dataDir = '../data'; // Write output files here.
 
 
 combinations.forEach(function(combination) {
@@ -64,7 +63,7 @@ combinations.forEach(function(combination) {
         }
         catch (e) {
           // ParseErrors mean something is wrong with the file, so all we need
-          // to do is to log it and move on. Other errors still need to propagate.
+          // to do is to log it and move on. Other errors still need to halt.
           if (e instanceof ParseError) {
             console.log('Invalid RMOB data file: ' + e.message);
           }
@@ -93,7 +92,6 @@ combinations.forEach(function(combination) {
 });
 
 
-// Run when all data is collected.
 function writeDataToFiles(data) {
   for (var dataID in data) {  
     // Flatten the data array so all months are together.
