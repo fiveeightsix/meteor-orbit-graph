@@ -5,7 +5,7 @@
 #+OPTIONS: num:nil 
 #+LANGUAGE: en
 
-[[screenshot.png?raw=true][Screenshot]]
+[[http://screenshot.png?raw=true][Screenshot]]
 
 See [[http://fiveeightsix.github.io/meteor-orbit-graph/][demo]].
 
