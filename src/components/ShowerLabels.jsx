@@ -41,7 +41,7 @@ var ShowerLabels = React.createClass({
       
       var peakDateObj = {
         year: Number(this.props.year),
-        month: Number(shower.peak.month),
+        month: Number(shower.peak.month - 1), // Months are 0 indexed
         day: Number(shower.peak.day)
       };
       var tickAngle = daysScale(moment(peakDateObj).dayOfYear());

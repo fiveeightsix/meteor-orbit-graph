@@ -45,7 +45,7 @@ module.exports = [
     "name": "Leonids",
     "peak": {
       "month": 11,
-      "day": 16
+      "day": 17
     }
   },
   {
